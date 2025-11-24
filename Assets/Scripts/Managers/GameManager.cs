@@ -47,4 +47,12 @@ public class GameManager : MonoBehaviour
     {
         userData = new UserData("È²ÁØ¿µ", 100000, 50000);
     }
+    public void SaveUserData()
+    {
+        //string json = JsonConvert.SerializeObject(userData);
+    }
+    public void LoadUserData()
+    {
+
+    }
 }
