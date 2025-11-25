@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using System.IO;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
@@ -52,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     public void MakeUserData()
     {
-        userData = new UserData("황준영", 100000, 50000);
+        userData = new UserData("chamber", "123123", "황준영", 100000, 50000);
     }
     public void SaveUserData()
     {
