@@ -18,12 +18,17 @@ public class AtmText : MonoBehaviour
         {
             GameManager.Instance.MakeUserData();
         }
-        
-        Refresh();
+        else
+        {
+            GameManager.Instance.MakeUserInfoPath();
+        }
+
+            Refresh();
     }
 
     public void Refresh()
     {
+        Debug.Log(userData.name);
         nameTxt.text = userData.name;
         cashTxt.text = string.Format("{0:N0}", userData.cash);
         balanceTxt.text = string.Format("{0:N0}", userData.balance);

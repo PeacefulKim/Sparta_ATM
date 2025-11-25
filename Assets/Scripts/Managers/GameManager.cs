@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
     public UserData userData;
 
-    private string path;
+    public string path;
 
     public static GameManager Instance
     {
@@ -41,17 +41,22 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
-        path = Path.Combine(Application.dataPath + "/Datas/", "database.json");
-        LoadUserData();
+
     }
 
     private void Start()
     {
     }
+    public void MakeUserInfoPath()
+    {
+        Debug.Log(userData.id);
+        path = Path.Combine(Application.dataPath + "/Datas/", userData.id + ".json");
+    }
 
     public void MakeUserData()
     {
-        userData = new UserData("chamber", "123123", "황준영", 100000, 50000);
+        userData = new UserData("chamber", "123123", "황준영");
+        MakeUserInfoPath();
     }
     public void SaveUserData()
     {

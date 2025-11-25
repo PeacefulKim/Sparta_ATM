@@ -13,10 +13,6 @@ public class PopupBank : MonoBehaviour
 
     private void Start()
     {
-        atmPopup.SetActive(true);
-        depositPopup.SetActive(false);
-        withdrawPopup.SetActive(false);
-        noMoneyPopup.SetActive(false);
     }
 
     public void OnClickDeposit()
