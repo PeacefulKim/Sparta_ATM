@@ -17,8 +17,9 @@ public class PopupLogin : MonoBehaviour
     [SerializeField] private InputField confirmpwInput;
     [SerializeField] private Text errorTxt;
 
-    [Header("오류 문구")]
-    string isBlank = " 을/를 확인해주세요.";
+    readonly string isBlank = " 을/를 확인해주세요.";
+    readonly string blank = "";
+    readonly public string path = Application.dataPath + "/Data/";
 
     public void SignUp()
     {
@@ -34,7 +35,13 @@ public class PopupLogin : MonoBehaviour
 
         UserData userData = new UserData(idInput.text, nameInput.text, pwInput.text);
         string json = JsonConvert.SerializeObject(userData);
-        File.WriteAllText(GameManager.Instance.path, json);
+        Debug.Log(path+" 경로");
+        File.WriteAllText(path + userData.id + ".json", json);
+
+        MakeBlank(idInput);
+        MakeBlank(nameInput);
+        MakeBlank(pwInput);
+        MakeBlank(confirmpwInput);
         errorTxt.text = "가입이 완료되었습니다.";
     }
 
@@ -46,5 +53,10 @@ public class PopupLogin : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private void MakeBlank(InputField field)
+    {
+        field.text = blank;
     }
 }
