@@ -3,13 +3,20 @@ using UnityEngine.UI;
 
 public class PopupBank : MonoBehaviour
 {
+    [Header("ÀºÇà ÆË¾÷")]
     [SerializeField] private GameObject atmPopup;
     [SerializeField] private GameObject depositPopup;
     [SerializeField] private GameObject withdrawPopup;
     [SerializeField] private GameObject noMoneyPopup;
+    [SerializeField] private GameObject sendPopup;
+    [SerializeField] private Text errorTxt;
 
+    [Header("ÀÎÇ²")]
     [SerializeField] private InputField depositInput;
     [SerializeField] private InputField withdrawInput;
+    [SerializeField] private InputField receiverInput;
+    [SerializeField] private InputField sendInput;
+
 
     private void Start()
     {
@@ -29,6 +36,7 @@ public class PopupBank : MonoBehaviour
     {
         depositPopup.SetActive(false);
         withdrawPopup.SetActive(false);
+        sendPopup.SetActive(false);
         atmPopup.SetActive(true);
     }
 
@@ -53,6 +61,10 @@ public class PopupBank : MonoBehaviour
         }
         userData.balance -= money;
         userData.cash += money;
+    }
+    public void Send(int money)
+    {
+
     }
 
     public void DepositOnInput()

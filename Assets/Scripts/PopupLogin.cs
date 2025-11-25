@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class PopupLogin : MonoBehaviour
 {
     [Header("로그인")]
-
-    [SerializeField] private InputField loginidInput;
-    [SerializeField] private InputField loginpwInput;
+    [SerializeField] private InputField loginIdInput;
+    [SerializeField] private InputField loginPwInput;
+    [SerializeField] private Text loginErrorTxt;
 
     [Header("회원가입")]
     [SerializeField] private InputField idInput;
@@ -17,10 +17,44 @@ public class PopupLogin : MonoBehaviour
     [SerializeField] private InputField confirmpwInput;
     [SerializeField] private Text errorTxt;
 
+    [Header("팝업")]
+    [SerializeField] private GameObject popupLogin;
+    [SerializeField] private GameObject popupBank;
+
     readonly string isBlank = " 을/를 확인해주세요.";
     readonly string blank = "";
     readonly public string path = Application.dataPath + "/Data/";
 
+    private void Start()
+    {
+        popupLogin.SetActive(true);
+        popupBank.SetActive(false);
+    }
+
+    public void Login()
+    {
+        UserData inputData;
+        try
+        {
+            Debug.Log(path + loginIdInput.text + ".json");
+            string database = File.ReadAllText(path + loginIdInput.text + ".json");
+            inputData = JsonConvert.DeserializeObject<UserData>(database);
+            GameManager.Instance.userData = inputData;
+        }
+        catch (FileNotFoundException)
+        {
+            loginErrorTxt.text = "ID" + isBlank;
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(loginPwInput.text) || inputData.password != loginPwInput.text)
+        {
+            loginErrorTxt.text = "PW" + isBlank;
+            return;
+        }
+
+        popupLogin.SetActive(false);
+        popupBank.SetActive(true);
+    }
     public void SignUp()
     {
         if (IsError(idInput, "ID")) return;
@@ -33,7 +67,7 @@ public class PopupLogin : MonoBehaviour
             return;
         }
 
-        UserData userData = new UserData(idInput.text, nameInput.text, pwInput.text);
+        UserData userData = new UserData(idInput.text, pwInput.text, nameInput.text);
         string json = JsonConvert.SerializeObject(userData);
         Debug.Log(path+" 경로");
         File.WriteAllText(path + userData.id + ".json", json);

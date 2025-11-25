@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     public void MakeUserInfoPath()
     {
         Debug.Log(userData.id);
-        path = Path.Combine(Application.dataPath + "/Datas/", userData.id + ".json");
+        path = Path.Combine(Application.dataPath + "/Data/", userData.id + ".json");
     }
 
     public void MakeUserData()
@@ -63,8 +63,10 @@ public class GameManager : MonoBehaviour
         string json = JsonConvert.SerializeObject(userData);
         File.WriteAllText(path, json);
     }
-    public void LoadUserData()
+    public void LoadUserData(string _id)
     {
+        string path = Application.dataPath + _id + ".json";
+        Debug.Log(path);
         string database = File.ReadAllText(path);
         userData = JsonConvert.DeserializeObject<UserData>(database);
     }
