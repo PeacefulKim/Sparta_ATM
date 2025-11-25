@@ -13,9 +13,12 @@ public class AtmText : MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.MakeUserData();
         userData = GameManager.Instance.userData;
-
+        if (userData == null)
+        {
+            GameManager.Instance.MakeUserData();
+        }
+        
         Refresh();
     }
 
@@ -24,5 +27,7 @@ public class AtmText : MonoBehaviour
         nameTxt.text = userData.name;
         cashTxt.text = string.Format("{0:N0}", userData.cash);
         balanceTxt.text = string.Format("{0:N0}", userData.balance);
+
+        GameManager.Instance.SaveUserData();
     }
 }

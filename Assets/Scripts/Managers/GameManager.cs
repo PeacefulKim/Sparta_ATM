@@ -1,9 +1,15 @@
+using Newtonsoft.Json;
+using System.IO;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
     public UserData userData;
+
+    private string path;
+
     public static GameManager Instance
     {
         get
@@ -19,7 +25,7 @@ public class GameManager : MonoBehaviour
     private static void SetupInstance()
     {
         instance = FindAnyObjectByType<GameManager>();
-        if(instance != null)
+        if(instance == null)
         {
             instance = new GameObject(typeof(GameManager).Name).AddComponent<GameManager>();
             DontDestroyOnLoad(instance.gameObject);
@@ -36,11 +42,12 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+        path = Path.Combine(Application.dataPath + "/Datas/", "database.json");
+        LoadUserData();
     }
 
     private void Start()
     {
-
     }
 
     public void MakeUserData()
@@ -49,10 +56,12 @@ public class GameManager : MonoBehaviour
     }
     public void SaveUserData()
     {
-        //string json = JsonConvert.SerializeObject(userData);
+        string json = JsonConvert.SerializeObject(userData);
+        File.WriteAllText(path, json);
     }
     public void LoadUserData()
     {
-
+        string database = File.ReadAllText(path);
+        userData = JsonConvert.DeserializeObject<UserData>(database);
     }
 }
